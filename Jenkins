@@ -38,3 +38,38 @@ To ensure Jenkins is securely set up by the administrator, a password has been w
 
 $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
+
+Master Slave Configuration
+Changing Jenkins Master User Behavior
+$ sudo vi /etc/passwd
+change /bin/false to /bin/bash
+
+$ sudo usermod -aG google-sudoers jenkins
+
+$ sudo su jenkins
+$ id
+uid=997(jenkins) gid=994(jenkins) groups=994(jenkins) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+$ pwd
+/var/lib/jenkins
+
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/var/lib/jenkins/.ssh/id_rsa):
+Created directory '/var/lib/jenkins/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /var/lib/jenkins/.ssh/id_rsa.
+Your public key has been saved in /var/lib/jenkins/.ssh/id_rsa.pub.
+
+Slave
+
+$ sudo useradd jenkins
+$ sudo usermod -aG google-sudoers jenkins
+$ pwd
+/home/jenkins
+$ mkdir .ssh
+$ cd .ssh
+$ vi authorized_keys
+$ chmod 700 .ssh/
+$ chmod 600 .ssh/authorized_keys
